@@ -1,0 +1,15 @@
+{
+  "name": "NFT votação Congresso Internacional",
+  "description": "Eu participei do Congresso Internacional e votei a Carta de Alexânia.",
+  "image": "https://github.com/osintplanner/NFT/blob/main/M%C3%A3o%20OK.png?raw=true",
+  "attributes": [
+    {
+      "trait_type": "Cor",
+      "value": "Azul"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "Raro"
+    }
+  ]
+}
