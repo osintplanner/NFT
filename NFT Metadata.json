@@ -1,0 +1,15 @@
+{
+  "name": "NFT votação Congresso Internacional",
+  "description": "Eu participei do Congresso Internacional e votei a Carta de Alexânia.",
+  "image": "https://meusite.com/caminho/para/imagem.png",
+  "attributes": [
+    {
+      "trait_type": "Cor",
+      "value": "Azul"
+    },
+    {
+      "trait_type": "Raridade",
+      "value": "Raro"
+    }
+  ]
+}
