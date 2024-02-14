@@ -6,21 +6,35 @@
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-image: url('https://i.pinimg.com/originals/a1/fe/09/a1fe09a8b4e68f5ec30944866f64c8ec.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #ffffff;
-            font-family: 'Roboto', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            text-shadow: 2px 2px 4px #000;
-        }
+   
+   body::before {
+    content: "";
+    position: fixed; /* ou 'absolute', dependendo da estrutura do seu layout */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3); /* Ajuste a opacidade conforme necessário */
+    z-index: -1; /* Garante que a sobreposição fique atrás do conteúdo */
+}
+
+body {
+    background-image: url('https://i.pinimg.com/originals/a1/fe/09/a1fe09a8b4e68f5ec30944866f64c8ec.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    text-shadow: 2px 2px 4px #000;
+    position: relative; /* Importante para funcionar com position: fixed no ::before */
+}
+
 	.logo {
             margin-bottom: 5px;
         }
