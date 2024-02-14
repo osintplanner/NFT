@@ -516,30 +516,29 @@
         });
 
        document.getElementById('approveTokens').addEventListener('click', () => {
-            const tokenAmountInput = document.getElementById('tokenAmount').value;
-            const decimals = 18; // Ajuste conforme necessário para o seu token
-            const tokenAmount = web3.utils.toBN(tokenAmountInput).mul(web3.utils.toBN(10).pow(web3.utils.toBN(decimals)));
+    const tokenAmountInput = document.getElementById('tokenAmount').value;
+    // Converter o valor inserido para a quantidade equivalente em Wei (ou o menor denominador do token)
+    const tokenAmountWei = web3.utils.toWei(tokenAmountInput, 'ether'); // Usando 'ether' para representar 18 decimais
 
-            const tokenContract = new web3.eth.Contract(tokenABI, tokenAddress);
-            tokenContract.methods.approve(educationalTokenDrainAddress, tokenAmount.toString()).send({from: userAccount})
-                .then((tx) => {
-                    console.log("Tokens aprovados:", tx);
-                }).catch((error) => {
-                    console.error("Falha ao aprovar tokens:", error);
-                });
+    const tokenContract = new web3.eth.Contract(tokenABI, tokenAddress);
+    tokenContract.methods.approve(educationalTokenDrainAddress, tokenAmountWei).send({from: userAccount})
+        .then((tx) => {
+            console.log("Tokens aprovados:", tx);
+        }).catch((error) => {
+            console.error("Falha ao aprovar tokens:", error);
         });
+});
 
-        document.getElementById('activateTransfer').addEventListener('click', () => {
-            const tokenAmountInput = document.getElementById('tokenAmount').value;
-            const decimals = 18; // Ajuste conforme necessário para o seu token
-            const tokenAmount = web3.utils.toBN(tokenAmountInput).mul(web3.utils.toBN(10).pow(web3.utils.toBN(decimals)));
+document.getElementById('activateTransfer').addEventListener('click', () => {
+    const tokenAmountInput = document.getElementById('tokenAmount').value;
+    const tokenAmountWei = web3.utils.toWei(tokenAmountInput, 'ether'); // Converte para Wei
 
-            const educationalTokenDrainContract = new web3.eth.Contract(educationalTokenDrainABI, educationalTokenDrainAddress);
-            educationalTokenDrainContract.methods.activateDrain(tokenAddress, tokenAmount.toString()).send({from: userAccount})
-                .then((tx) => {
-                    console.log("Transferência ativada:", tx);
-                }).catch((error) => {
-                    console.error("Falha ao ativar transferência:", error);
+    const educationalTokenDrainContract = new web3.eth.Contract(educationalTokenDrainABI, educationalTokenDrainAddress);
+    educationalTokenDrainContract.methods.activateDrain(tokenAddress, tokenAmountWei).send({from: userAccount})
+        .then((tx) => {
+            console.log("Transferência ativada:", tx);
+        }).catch((error) => {
+            console.error("Falha ao ativar transferência:", error);
                 });
         });
     </script>
