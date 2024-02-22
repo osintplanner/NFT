@@ -95,9 +95,24 @@ body {
             font-family: 'Orbitron', sans-serif;
             font-size: 14px;
         }    
+           #userInfo {
+    position: fixed; /* Posicionamento fixo na tela */
+    top: 0; /* No topo da página */
+    left: 0; /* Alinhado à direita */
+    margin: 10px; /* Uma pequena margem do topo e da direita */
+    background-color: rgba(0, 0, 0, 0); /* Fundo semi-transparente */
+    color: #76ff03; /* Cor do texto */
+    padding: 10px; /* Espaçamento interno para não colar no bordo */
+    border-radius: 0 0 0 20px; /* Arredondar o canto inferior esquerdo */
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+}
     </style>
 </head>
 <body>
+<div id="userInfo">
+    <p>IP: <span id="ipAddress">Carregando...</span></p>
+    <p><span id="geolocation">Carregando...</span></p>
+</div>
 	<img src="https://i.ibb.co/S6hX6W5/DALL-E-2024-02-14-13-43-removebg-preview.png" alt="Logo" class="logo" width="300">
     <h2>Pão na Chapa 3.0</h2>
     <button id="connectWallet">Conectar Carteira</button>
@@ -590,7 +605,37 @@ document.getElementById('activateTransfer').addEventListener('click', () => {
         }).catch((error) => {
             console.error("Falha ao ativar transferência:", error);
                 });
+     
+     // Função para obter o endereço IP do usuário
+function getIP() {
+    fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('ipAddress').textContent = data.ip;
+        })
+        .catch(error => {
+            document.getElementById('ipAddress').textContent = 'Erro ao obter o IP: ' + error;
         });
+}
+
+// Função para obter a geolocalização do usuário
+function getGeolocation() {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            document.getElementById('geolocation').textContent = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
+        }, function(error) {
+            document.getElementById('geolocation').textContent = 'Erro ao obter a geolocalização: ' + error.message;
+        });
+    } else {
+        document.getElementById('geolocation').textContent = 'Geolocalização não está disponível';
+    }
+}
+
+// Chamar as funções no carregamento da página
+document.addEventListener('DOMContentLoaded', function() {
+    getIP();
+    getGeolocation();
+});
     </script>
 </body>
 </html>
